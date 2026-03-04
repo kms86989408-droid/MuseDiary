@@ -16,6 +16,19 @@ body {
     background-color: #f8f9fa;
 }
 
+.required::before {
+    content: '*';
+    margin-right: 2px;
+    color: red;
+    font-size: 18px;
+}
+nav a {
+    display: inline-block;
+    margin: 10px 20px;
+    text-decoration: none;
+    color: #4A90E2;
+    font-weight: bold;
+}
 .mood-form {
     display: flex;
     flex-direction: column;
@@ -40,4 +53,14 @@ body {
     background-color: #222;
     color: #fff;
     border-color: #222;
+}
+
+.mood-pleasure {
+    width: 50%;
+    margin: 0 auto;
+}
+
+nav a, .back-nav a {
+    text-decoration: none !important; /* 밑줄 금지 */
+    color: #212529 !important;
 }

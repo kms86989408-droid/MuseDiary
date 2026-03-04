@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mood-container">
+    <!-- 되돌아가기 -->
+    <div class="back-nav">
+        <a href="{{ url_for('daily_mood') }}">
+            <span style="font-size: 1.5rem;">↩</span>
+        </a>
+    </div>
+
+    <!-- happy 이모지 -->
+    <div class="mood-sad">
+        <img src="image/sad.png">
+    </div>
+
+    <!-- 기분 표현 -->
+    <h1 class="mood-title">슬퍼 ㅠㅠ</h1>
+
+    <!-- 노래 추천 -->
+    <div class="song-info">
+        <p>추천 노래 : {{ singer }} - {{ song }}</p>
+
+        <a href="" target="_blank" class="youtube-link">링크를 눌러주세요!</a>
+    </div>
+</div>
+
+{% endblock content %}
