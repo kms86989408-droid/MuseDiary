@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, session
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
 import jwt
@@ -43,6 +43,7 @@ def login():
 
     user = db.users.find_one({"id" : id})
     if user and bcrypt.check_password_hash(user["pw"], pw):
+        session["userId"] = user["id"]
 
         token = jwt.encode({
             "user_id" : user["id"],
@@ -74,6 +75,8 @@ def register():
         return "ID, Email, PW 누락", 400
 
     # 중복 ID / Email 확인
+
+
     hash_pw = bcrypt.generate_password_hash(pw) # pw 해쉬암호화
 
     db.users.insert_one({
@@ -87,7 +90,7 @@ def register():
 @app.route("/daily-mood", methods=["GET", "POST"])
 def daily_mood():
     if request.method == "POST":
-        userId = "test" #get_current_user_id(test)  # 사용자 로그인 Id get
+        userId = session.get("userId")  # 사용자 로그인 Id get
         
         mood = request.form.get("mood") # 기분 아이콘 
         content = request.form.get("content","") # 한줄 일기  
@@ -112,13 +115,13 @@ def daily_mood():
             upsert = True
         )
         # 클릭시 페이지 넘길꺼
-        if mood == happy :
+        if mood == "happy" :
             return render_template("happy.html")
-        elif mood == angry :
+        elif mood == "angry" :
             return render_template("angry.html")
-        elif mood == sad :
+        elif mood == "sad" :
             return render_template("sad.html")
-        elif mood == pleasure :
+        elif mood == "pleasure" :
             return render_template("sad.html")
 
         # return redirect(url_for("daily_mood"))
@@ -128,7 +131,7 @@ def daily_mood():
 @app.route("/count", methods=["GET", "POST"])
 def count():
     if request.method == "GET":
-        user_id = "test"
+        user_id = session.get("userId")
         mood_counts = db.mood_mapping.find_one({"userId": user_id}) or {}
 
         return render_template(
