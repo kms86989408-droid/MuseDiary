@@ -1,0 +1,80 @@
+/* 회원가입 페이지 */
+.register-form {
+    input {
+        background-color: #5f9ea0;
+        border-style: none;
+        border-radius: 20px;
+    }
+}
+* {
+    font-family: "Stylish", sans-serif;
+}
+*, .mood-buttons {
+    text-align: center;
+}
+body {
+    background-color: #f8f9fa;
+    padding-bottom: 56px;
+}
+
+.required::before {
+    content: '*';
+    margin-right: 2px;
+    color: red;
+    font-size: 18px;
+}
+nav a {
+    display: inline-block;
+    margin: 10px 20px;
+    text-decoration: none;
+    color: #4A90E2;
+    font-weight: bold;
+}
+.mood-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mood-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.mood-btn {
+    min-width: 52px;
+    padding: 8px 12px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.mood-btn.is-selected {
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+
+.mood-pleasure {
+    width: 50%;
+    margin: 0 auto;
+}
+
+nav a, .back-nav a {
+    text-decoration: none !important; /* 밑줄 금지 */
+    color: #212529 !important;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 8px 0;
+}
+
+footer p {
+    margin: 0;
+}

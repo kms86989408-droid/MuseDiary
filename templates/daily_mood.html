@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}오늘의 감정{% endblock title %}
+
+{% block content %}
+<h2>오늘의 감정 기록</h2>
+<p>로그인 후 감정과 추천 음악을 기록하는 페이지입니다.</p>
+
+<form method="POST" class="mood-form">
+    <p>오늘의 기분</p>
+    <input type="hidden" id="mood" name="mood" value="happy">
+
+    <div id="mood-list">
+        <div class="mood-buttons" role="group" aria-label="감정 선택">
+            <button type="button" class="mood-btn is-selected" data-mood="happy">희</button>
+            <button type="button" class="mood-btn" data-mood="angry">노</button>
+            <button type="button" class="mood-btn" data-mood="sad">애</button>
+            <button type="button" class="mood-btn" data-mood="pleasure">락</button>
+        </div>
+        <textarea name="content" id="content" cols="60" rows="3" placeholder="오늘 감정은 어땠나요? 편하게 작성해주세요"></textarea>
+    </div>
+
+    <button type="submit">저장</button>
+</form>
+
+<script>
+    const moodInput = document.getElementById("mood");
+    const moodButtons = document.querySelectorAll(".mood-btn");
+
+    moodButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            moodInput.value = button.dataset.mood;
+            moodButtons.forEach((item) => item.classList.remove("is-selected"));
+            button.classList.add("is-selected");
+        });
+    });
+</script>
+{% endblock content %}

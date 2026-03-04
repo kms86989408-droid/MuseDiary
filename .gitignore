@@ -1,0 +1,37 @@
+# --- Virtual Environments (가상환경) ---
+# 가상환경 폴더는 용량이 크고 OS에 의존적이므로 절대 올리지 않습니다.
+.venv/
+venv/
+ENV/
+env/
+
+# --- Python Build & Cache (파이썬 캐시) ---
+# 실행 시 자동으로 생성되는 파일들입니다.
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# --- macOS Specific (맥 전용) ---
+# 맥북에서 폴더를 열 때마다 생기는 메타데이터 파일입니다.
+.DS_Store
+
+# --- Environment Variables & Secrets (보안) ---
+# DB 비밀번호나 API 키가 들어있는 파일은 공유하면 안 됩니다.
+.env
+.flaskenv
+
+# --- IDEs & Editors (에디터 설정) ---
+# 개인별 에디터 설정 파일은 팀원과 겹칠 수 있어 제외합니다.
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Flask & Logs ---
+# 로그 파일이나 임시 데이터베이스
+instance/
+*.log
+*.db
+*.sqlite3

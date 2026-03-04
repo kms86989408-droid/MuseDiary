@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}MuseDiary{% endblock title %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="d-flex justify-content-center p-3">
+        <a href="{{ url_for('login') }}" class="mx-3 text-decoration-none">LOGIN</a>
+        <a href="{{ url_for('register') }}" class="mx-3 text-decoration-none">REGISTER</a>
+        <a href="{{ url_for('daily_mood') }}" class="mx-3 text-decoration-none">DAILY MOOD</a>
+        <a href="{{ url_for('happy') }}" class="mx-3 text-decoration-none">희</a>
+        <a href="{{ url_for('angry') }}" class="mx-3 text-decoration-none">노</a>
+        <a href="{{ url_for('sad') }}" class="mx-3 text-decoration-none">애</a>
+        <a href="{{ url_for('pleasure') }}" class="mx-3 text-decoration-none">락</a>
+        <a href="{{ url_for('count') }}" class="mx-3 text-decoration-none">count</a>
+
+    </nav>
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+    <footer>
+        <p>&copy; MuseDiary</p>
+    </footer>
+</body>
+</html>
