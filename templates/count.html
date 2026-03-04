@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mood-container">
+    <!-- 되돌아가기 -->
+    <div class="back-nav">
+        <a href="{{ url_for('daily_mood') }}">
+            <span style="font-size: 1.5rem;">↩</span>
+        </a>
+    </div>
+
+    <article>
+        <div>{{ count-happy }}</div>
+        <div>{{ count-angry }}</div>
+        <div>{{ count-sad }}</div>
+        <div>{{ count-pleasure }}</div>
+    </article>
+
+    <article>
+        <div>{{ recommand-happy }}</div>
+        <div>{{ recommand-angry }}</div>
+        <div>{{ recommand-sad }}</div>
+        <div>{{ recommand-pleasure }}</div>
+    </article>
+</div>
