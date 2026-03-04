@@ -26,10 +26,13 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
   "diary_entries": {
     "_id": "ObjectId",
     "userId": "ObjectId (required, ref: users._id)",
-    "content": "String (required)",
-    "mood": "String (required)",
-    "moodScore": "Number (required)",
-    "createdAt": "Date (optional, default: Date.now)"
+    "analysisData": [
+      {
+        "content": "String (required)",
+        "createdAt": "Date (optional, default: Date.now)",
+        "mood": "String (required, enum: happy|angry|sad|pleasure)"
+      }
+    ]
   },
   "mood_mapping": {
     "happy": "Number",
@@ -54,17 +57,31 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
   "diary_entries": {
     "_id": "ObjectId('66f1...')",
     "userId": "ObjectId('66f0...')",
-    "content": "오늘은 기분이 정말 좋았다.",
-    "mood": "happy",
-    "moodScore": 10,
-    "createdAt": "2026-03-04T10:20:00.000Z"
+    "analysisData": [
+      {
+        "content": "오늘은 기분이 정말 좋았다.",
+        "createdAt": "2026-03-04T10:20:00.000Z",
+        "mood": "happy"
+      },
+      {
+        "content": "짜증난다.",
+        "createdAt": "2026-03-05T10:20:10.000Z",
+        "mood": "angry"
+      },
+      {
+        "content": "기분이 정말 별로.",
+        "createdAt": "2026-03-06T10:20:23.000Z",
+        "mood": "sad"
+      }
+    ]
   },
   "mood_mapping": {
     "happy": 10,
     "angry": 1,
-    "love": 10,
+    "sad": 2,
     "pleasure": 6
-  }
+  },
+
 }
 ```
 

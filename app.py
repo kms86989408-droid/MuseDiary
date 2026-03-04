@@ -28,7 +28,6 @@ bcrypt = Bcrypt(app) # bcrypt 초기화
 def home():
     return redirect(url_for("login"))
 
-
 # 로그인 페이지
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -75,7 +74,7 @@ def register():
         return "ID, Email, PW 누락", 400
 
     # 중복 ID / Email 확인
-    hash_pw = bcrypt.generate_password_hash(pw).decode("utf-8") # pw 해쉬암호화
+    hash_pw = bcrypt.generate_password_hash(pw) # pw 해쉬암호화
 
     db.users.insert_one({
         "id" : id,
@@ -87,6 +86,11 @@ def register():
 
 @app.route("/daily-mood", methods=["GET", "POST"])
 def daily_mood():
+    if request.method == "POST":
+        selected_mood = request.form.get("mood")
+        typed_mood = request.form.get("mood-list")
+        today = datetime.datetime.now()
+            
     return render_template("daily_mood.html")
     
     
