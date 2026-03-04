@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MuseDiary{% endblock title %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">HOME</a>
+    </nav>
+    <main>
+        {% block content %}
+            <img src="{{ url_for('static', filename='../musicdiary.png') }}">
+            <div>
+                <label for="username">아이디</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div>
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password">
+            </div>
+        
+            {% if can_login %}
+                <!-- 로그인 버튼 누르면 daily_mood.html로 이동 -->
+                <button type="submit" onclick="location.href= 'daily_mood.html' ">로그인</button>
+                <!-- 회원가입 버튼 누르면 register.html로 이동 -->
+                <button type="button" onclick="location.href= 'register.html'">회원가입</a>
+            {% endif %}
+        {% endblock content %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} My Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>

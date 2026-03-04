@@ -1,0 +1,22 @@
+/* 회원가입 페이지 */
+.register-form {
+    input {
+        background-color: #5f9ea0;
+        border-style: none;
+        border-radius: 20px;
+    }
+}
+* {
+    font-family: "Stylish", sans-serif;
+}
+body {
+    background-color: #f8f9fa;
+}
+/* 회원가입 버튼 (파란색) */
+.register {
+    text-align: left;
+}
+/* 로그인 버튼 (빨간색) */
+.login {
+    text-align: right;
+}
