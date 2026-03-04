@@ -3,12 +3,24 @@ from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
 import jwt
 import datetime
+import os
+from dotenv import load_dotenv
 
-client = MongoClient('localhost', 27017)
-db = client.muse_diary
+load_dotenv()
+
+mongo_uri = os.getenv("MONGO_URI")
+secret_key = os.getenv("SECRET_KEY")
+
+if not mongo_uri:
+    raise ValueError("MONGO_URI is not set in .env")
+if not secret_key:
+    raise ValueError("SECRET_KEY is not set in .env")
+
+client = MongoClient(mongo_uri)
+db = client.get_default_database()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "SECRET_KEY"
+app.config["SECRET_KEY"] = secret_key
 bcrypt = Bcrypt(app) # bcrypt 초기화
 
 # 홈
