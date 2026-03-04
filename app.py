@@ -1,9 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, session
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
+from bs4 import BeautifulSoup
 import jwt
 import datetime
 import os
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -146,8 +148,6 @@ def count():
             recommend_pleasure="-",
         )
     
-    # if 
-
 @app.route("/happy")
 def happy():
     return render_template("happy.html")
@@ -166,9 +166,7 @@ def sad():
 @app.route("/pleasure")
 def pleasure():
     return render_template("pleasure.html")
-    
 
-    
-    
+
 if __name__ == "__main__":
     app.run("0.0.0.0", port=8080, debug=True)
