@@ -16,19 +16,31 @@
 
         <div id="mood-list">
             <div class="mood-buttons">
-                <button type="button" class="mood-btn" data-mood="happy">희</button>
-                <button type="button" class="mood-btn" data-mood="angry">노</button>
-                <button type="button" class="mood-btn" data-mood="sad">애</button>
-                <button type="button" class="mood-btn" data-mood="pleasure">락</button>
+                <button type="button" class="mood-btn" data-mood="happy">
+                    <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;" class="mood-emoji">
+                    <span class="mood-text">희</span>
+                </button>
+                <button type="button" class="mood-btn" data-mood="angry">
+                    <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;" class="mood-emoji">
+                    <span class="mood-text">노</span>
+                </button>
+                <button type="button" class="mood-btn" data-mood="sad">
+                    <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;" class="mood-emoji">
+                    <span class="mood-text">애</span>
+                </button>
+                <button type="button" class="mood-btn" data-mood="pleasure">
+                    <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;" class="mood-emoji">
+                    <span class="mood-text">락</span>
+                </button>
             </div>
 
             <textarea name="content" id="content" cols="60" rows="3" placeholder="오늘은 어떤 일이 있었나요? 짧은 메모를 남겨도 좋아요! (선택사항)"></textarea>
         </div>
 
-        <button type="submit" class="btn-jelly-save">저장하고 음악 페어링하기</button>
+        <button type="submit" class="btn-jelly-save">저장하고 음악 추천하기</button>
 
         <!-- count.html 가는 버튼 -->
-            <button type="submit" class="btn-jelly-count">지난 기록 꺼내보기</button>
+        <button type="submit" class="btn-jelly-count">지난 기록 꺼내보기</button>
     </form>
 </div>
 
