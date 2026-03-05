@@ -17,6 +17,26 @@ body {
     padding-bottom: 56px;
 }
 
+/* 부모 컨테이너 */
+.align {
+    position: relative;
+    width: 100%;
+    height: 60px; /* 버튼이 들어갈 충분한 높이 */
+}
+
+.align {
+    text-align: right; /* 단순히 오른쪽으로 정렬 */
+    padding: 20px;
+}
+
+.align button {
+    background-color: #ff5a5a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
 .required::before {
     content: '*';
     margin-right: 2px;
@@ -34,6 +54,12 @@ nav a {
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+.align {
+    display: flex;
+    justify-content: flex-end; /* 가로 방향 끝(오른쪽)으로 밀어내기 */
+    padding: 20px 20px 0 0;
 }
 
 .mood-buttons {
@@ -77,4 +103,36 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+/* 부모 컨테이너가 버튼 배치의 기준점이 되도록 설정 */ 
+.align {
+    position: relative; /* 자식요소(.btn-record)의 기준 */
+    width: 100%; /* 해당 영역을 100% */
+    height: 80px; /* 버튼이 들어갈 충분한 높이 확보 */
+}
+
+/* 젤리 버튼 디자인 및 애니메이션 */
+.btn-jelly {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 25px; /* 둥근 젤리 모양 */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 부드러운 움직임 */
+    color: #1E3A5F;
+}
+
+.btn-jelly:hover {
+    transform: scale(1.1);
+}
+
+.btn-jelly:active {
+    transform: scale(0.95);
+}
+
+.btn-jelly:hover {
+    animation: jelly 0.6s both;
+}
+.btn-record:hover {
+    background-color: #e04a4a; /* 마우스 올렸을 때 약간 더 진하게 */
 }

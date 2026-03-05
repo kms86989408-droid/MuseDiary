@@ -5,6 +5,11 @@
 {% block content %}
 <h2>오늘의 감정 기록</h2>
 <p>로그인 후 감정과 추천 음악을 기록하는 페이지입니다.</p>
+<div class="align">
+    <a href="{{ url_for('count') }}" class="btn btn-primary btn-jelly">
+        나의 기록
+    </a>
+</div>
 
 <form method="POST" class="mood-form">
     <p>오늘의 기분</p>
