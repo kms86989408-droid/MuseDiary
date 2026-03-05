@@ -9,6 +9,7 @@ import random
 import re
 import requests
 from dotenv import load_dotenv
+from db.seed_data import seed_database
 
 load_dotenv()
 
@@ -248,5 +249,12 @@ def normalize_song_text(text):
 
 if __name__ == "__main__":
     client.drop_database(db.name)
+    print('데이터 초기화완료!')
+    try:
+        seed_database(db, bcrypt)
+        print("초기데이터 삽입 성공!!")
+    except Exception as e:
+        print(f"초기데이터 삽입 실패: {e}")
+        raise
     app.run("0.0.0.0", port=8080, debug=True)
 

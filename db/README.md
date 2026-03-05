@@ -52,7 +52,7 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
 {
   "users": {
     "_id": "ObjectId",
-    "username": "String (required, unique)",
+    "id": "String (required, unique)",
     "email": "String (required, unique)",
     "pw": "String (required, bcrypt hash)",
     "createdAt": "Date (optional, default: Date.now)"
@@ -64,25 +64,26 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
       {
         "content": "String (required)",
         "createdAt": "Date (optional, default: Date.now)",
-        "mood": "String (required, enum: happy|angry|sad|pleasure)"
+        "mood": "String (required, enum: happy|angry|sad|pleasure)",
+        "song": "String (optional, ref: songs._id)"      
       }
     ],
-    "songId": "ObjectId (optional, ref: songs._id)"
-  },
-  "songs": {
-    "_id": "ObjectId",
-    "userId": "ObjectId (required, ref: users._id)",
-    "songTitle": "String (required)",
-    "createdAt": "Date (optional, default: Date.now)"
   },
   "mood_mapping": {
+    "userId": "String (required, ref: users.id)",
     "happy": "Number",
     "angry": "Number",
-    "love": "Number",
+    "sad": "Number",
     "pleasure": "Number"
   }
 }
 ```
+
+## Seed Data Source
+
+- 서버 시작 시 `app.py`의 main 블록에서 DB를 초기화한 뒤 시드 데이터를 자동 삽입합니다.
+- 실제 시드 소스는 `db/seed_data.py`입니다.
+- `db/dummy-data.csv`는 참고용 샘플 텍스트이며 런타임에서 직접 로드하지 않습니다.
 
 ## Sample Documents
 
@@ -90,7 +91,7 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
 {
   "users": {
     "_id": "ObjectId('66f0...')",
-    "username": "muse_user",
+    "id": "muse_user",
     "email": "muse@example.com",
     "pw": "$2b$12$...",
     "createdAt": "2026-03-04T10:00:00.000Z"
@@ -138,7 +139,7 @@ MongoDB 데이터 구조를 JSON 중심으로 정리한 문서입니다.
 ```json
 {
   "users": [
-    { "key": { "username": 1 }, "unique": true },
+    { "key": { "id": 1 }, "unique": true },
     { "key": { "email": 1 }, "unique": true }
   ],
   "diary_entries": [
