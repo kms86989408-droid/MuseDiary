@@ -167,16 +167,16 @@ def daily_mood():
 @app.route("/count", methods=["GET", "POST"])
 def count():
     user_id = session.get("userId")
+    entries = db.diary_entries.find_one({"userId": user_id}) or {}
+    entries_data = entries.get("analysisData", [])  # analysisData 데이터 조회
+    mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
+
     if not user_id:
         return redirect(url_for("login"))
 
     mood_counts = db.mood_mapping.find_one({"userId": user_id}) or {}
 
     if request.method == "POST":
-        entries = db.diary_entries.find_one({"userId": user_id}) or {}
-        entries_data = entries.get("analysisData", [])  # analysisData 데이터 조회
-        mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
-
         print(f"테스트입니다.{entries_data}, {mood_mapping}")
         return redirect(url_for("ai_report"))
 
