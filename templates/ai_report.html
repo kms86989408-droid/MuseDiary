@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mood-container">
+    <!-- 되돌아가기 -->
+    <div class="back-nav">
+        <a href="{{ url_for('daily_mood') }}">
+            <span style="font-size: 1.5rem;">↩</span>
+        </a>
+    </div>
+<h3>분석페이지 </h3>
+    <div>mood-mapping</div>
+    <div>ai 분석</div>
+  </div>
+{% endblock content %}
