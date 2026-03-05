@@ -177,6 +177,20 @@ def count():
 
     mood_counts = db.mood_mapping.find_one({"userId": user_id}) or {}
 
+    mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
+
+    happy_contents = [item.get("content") for item in entries_data if item.get("mood") == "happy"]
+    happy_latest5 = list(reversed(happy_contents))[:5]
+
+    sad_contents = [item.get("content") for item in entries_data if item.get("mood") == "sad"]
+    sad_latest5 = list(reversed(sad_contents))[:5]
+
+    angry_contents = [item.get("content") for item in entries_data if item.get("mood") == "angry"]
+    angry_latest5 = list(reversed(angry_contents))[:5]
+
+    pleasure_contents = [item.get("content") for item in entries_data if item.get("mood") == "pleasure"]
+    pleasure_latest5 = list(reversed(pleasure_contents))[:5]
+
     if request.method == "POST":
         ai_message = generate_mood_report(entries_data, mood_mapping)
         session["ai_report_message"] = ai_message
@@ -188,10 +202,10 @@ def count():
         count_angry=mood_counts.get("angry", 0),
         count_sad=mood_counts.get("sad", 0),
         count_pleasure=mood_counts.get("pleasure", 0),
-        recommend_happy="-",
-        recommend_angry="-",
-        recommend_sad="-",
-        recommend_pleasure="-",
+        recommend_happy= happy_latest5,
+        recommend_angry= angry_latest5,
+        recommend_sad= sad_latest5,
+        recommend_pleasure= pleasure_latest5,
     )
     
 
