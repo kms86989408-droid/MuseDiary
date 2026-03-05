@@ -247,5 +247,6 @@ def normalize_song_text(text):
     return cleaned
 
 if __name__ == "__main__":
+    client.drop_database(db.name)
     app.run("0.0.0.0", port=8080, debug=True)
 
