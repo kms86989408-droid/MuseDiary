@@ -404,6 +404,10 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    background-color: var(--MuseDiary-white);
+    border-radius: 24px;
+    padding: 28px 32px;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
 }
 
 .robot-wrap {
@@ -461,6 +465,7 @@ body {
     text-align: center;
     white-space: pre-line;
     flex: 1;
+    word-break: keep-all;
 }
 
 @media (max-width: 900px) {
@@ -469,4 +474,5 @@ body {
     .message { font-size: 34px; }
     .robot { font-size: 130px; }
     .chip { width: 120px; height: 120px; font-size: 48px; }
+    .report { flex-direction: column; padding: 24px; }
 }

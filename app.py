@@ -288,8 +288,6 @@ def pleasure():
 @app.route("/ai_report", methods=["GET"]) # COUNT 페이지로 이동
 @login_required
 def ai_report():
-    if request.method == "GET":
-        return render_template("count.html")
     user_name = session.get("userId", "000")
     ai_message = session.get("ai_report_message")
     return render_template("ai_report.html", user_name=user_name, ai_message=ai_message)

@@ -3,33 +3,16 @@
 {% block title %}AI 분석 결과{% endblock title %}
 
 {% block content %}
-
-<div class="ai-report">
-    <!-- 되돌아가기 -->
-    <div class="ai-report-header">
-        <form method="GET" action="{{ url_for('count') }}" id="back-link">
-            <button type="submit" class="btn-jelly-back">↩ 다시 기록하기</button>
-        </form>
-
-        <!-- ai_report 주제 -->
-        <h2 class="ai-title">{{ user_name }}님 분석 결과</h2>
-    </div>
-
-    <!-- ai_report 본문 -->
-    <div class="content-container">
-        <div class="content-left">
-            <div class="robot">🤖</div>
-        </div>
-        <div class="content-right">
-            <p class="message">{{ ai_message or "아직 분석 결과가 없습니다.\ncount 페이지에서 분석하기 버튼을 눌러주세요." }}</p>
-        </div>
-    </div>
-    <div class="page">
+<div class="page">
     <header class="top">
         <a href="{{ url_for('count') }}" class="back-link" aria-label="뒤로가기">&#8634;</a>
         <div class="title-wrap">
             <div class="title-icon">AI</div>
-            <h1 class="title">{{ user_name }} 님 분석결과</h1>
+            <h1 class="title">분석결과 {{ user_name }} 님</h1>
         </div>
     </header>
+    <section class="report">
+        <p class="message">{{ ai_message or "아직 분석 결과가 없습니다.\ncount 페이지에서 분석하기 버튼을 눌러주세요." }}</p>
+    </section>
+</div>
 {% endblock content %}
