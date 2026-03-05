@@ -1,3 +1,8 @@
+id:happy12345 pw:54321happy email:happy@gmail.com
+id:angry12345 pw:54321angry email:angry@gmail.com
+id:sad12345 pw:54321sad email:sad@gmail.com
+id:pleasure12345 pw:54321pleasure email:pleasure@gmail.com
+
 (id, emotion, "comment", date time)
 (happy12345, happy, "오늘 날씨도 좋고 기분 최고!", "2026-02-01T10:20:00.000Z")
 (happy12345, happy, "친구 만나서 너무 즐거웠다.", "2026-02-02T10:20:00.000Z")
