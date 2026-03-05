@@ -197,42 +197,36 @@ def count():
     entries = db.diary_entries.find_one({"userId": user_id}) or {}
     entries_data = entries.get("analysisData", [])  # analysisData 데이터 조회
     mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
-
     mood_counts = db.mood_mapping.find_one({"userId": user_id}) or {}
 
-    mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
+    def format_entry_date(created_at):
+        if hasattr(created_at, "strftime"):
+            return created_at.strftime("%y.%m.%d")
+        if isinstance(created_at, str):
+            match = re.match(r"(\d{4})-(\d{2})-(\d{2})", created_at)
+            if match:
+                year, month, day = match.groups()
+                return f"{year[2:]}.{month}.{day}"
+        return "--.--.--"
 
-    happy_contents = [item.get("content") for item in entries_data if item.get("mood") == "happy"]
-    happy_latest5 = list(reversed(happy_contents))#[:5]
-    happy_date =[
-        f"{d.year}, {d.month}, {d.day}"
-        for item in entries_data
-        if item.get("mood") == "happy" and (d := item.get("createdAt"))
-    ]
+    def build_mood_entries(mood_key):
+        mood_entries = []
+        for item in entries_data:
+            if item.get("mood") != mood_key:
+                continue
+            content = (item.get("content") or "").strip()
+            if not content:
+                continue
+            mood_entries.append({
+                "date": format_entry_date(item.get("createdAt")),
+                "content": content
+            })
+        return list(reversed(mood_entries))
 
-    sad_contents = [item.get("content") for item in entries_data if item.get("mood") == "sad"]
-    sad_latest5 = list(reversed(sad_contents))#[:5]
-    sad_date =[
-        f"{d.year}, {d.month}, {d.day}"
-        for item in entries_data
-        if item.get("mood") == "sad" and (d := item.get("createdAt"))
-    ]
-
-    angry_contents = [item.get("content") for item in entries_data if item.get("mood") == "angry"]
-    angry_latest5 = list(reversed(angry_contents))#[:5]
-    angry_date =[
-        f"{d.year}, {d.month}, {d.day}"
-        for item in entries_data
-        if item.get("mood") == "angry" and (d := item.get("createdAt"))
-    ]
-
-    pleasure_contents = [item.get("content") for item in entries_data if item.get("mood") == "pleasure"]
-    pleasure_latest5 = list(reversed(pleasure_contents))#[:5]
-    pleasure_date =[
-        f"{d.year}, {d.month}, {d.day}"
-        for item in entries_data
-        if item.get("mood") == "pleasure" and (d := item.get("createdAt"))
-    ]
+    happy_entries = build_mood_entries("happy")
+    angry_entries = build_mood_entries("angry")
+    sad_entries = build_mood_entries("sad")
+    pleasure_entries = build_mood_entries("pleasure")
 
     if request.method == "POST":
         ai_message = generate_mood_report(entries_data, mood_mapping)
@@ -245,10 +239,10 @@ def count():
         count_angry=mood_counts.get("angry", 0),
         count_sad=mood_counts.get("sad", 0),
         count_pleasure=mood_counts.get("pleasure", 0),
-        recommend_happy= happy_latest5,
-        recommend_angry= angry_latest5,
-        recommend_sad= sad_latest5,
-        recommend_pleasure= pleasure_latest5,
+        recommend_happy=happy_entries,
+        recommend_angry=angry_entries,
+        recommend_sad=sad_entries,
+        recommend_pleasure=pleasure_entries,
     )
     
 

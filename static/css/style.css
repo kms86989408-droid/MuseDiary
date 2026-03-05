@@ -250,9 +250,9 @@ input[type="text"], input[type="password"], input[type="email"] {
 
 /* 버튼 두 개를 감싼 컨테이너 */
 .back-report-button {
-    display: flex !important;           /* 내부 요소를 가로로 나열 */
-    justify-content: space-between !important; /* 왼쪽 끝, 오른쪽 끝으로 강제 분리 */
-    align-items: center;                /* 버튼들 높이 중앙 맞춤 */
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     width: 100% !important;             /* 가로 길이를 부모만큼 꽉 채워야 벌어집니다 */
     max-width: 100%;                    /* 혹시 모를 너비 제한 해제 */
     margin: 0 0 30px 0 !important;      /* 아래 카드들과의 간격만 유지 */
@@ -264,6 +264,60 @@ input[type="text"], input[type="password"], input[type="email"] {
     display: inline-block !important;
     width: auto !important;
     margin: 0 !important;
+}
+
+#back-link {
+    justify-self: start;
+}
+
+#report {
+    justify-self: end;
+}
+
+.count-page-title {
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    color: #222;
+}
+
+.emotion-label-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.emotion-label {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: #3A3A3A;
+    letter-spacing: 2px;
+    padding: 4px 0;
+    border-radius: 10px;
+}
+
+.emotion-label-row .emotion-label:nth-child(1) {
+    color: #D4A100;
+    background-color: #FFF9DD;
+}
+
+.emotion-label-row .emotion-label:nth-child(2) {
+    color: #E05E74;
+    background-color: #FFE8ED;
+}
+
+.emotion-label-row .emotion-label:nth-child(3) {
+    color: #4A95B3;
+    background-color: #E8F5FB;
+}
+
+.emotion-label-row .emotion-label:nth-child(4) {
+    color: #D1834C;
+    background-color: #FFF0E4;
 }
 
 .btn-jelly-reback {
@@ -296,7 +350,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     justify-content: space-between; /* 카드 사이 간격을 균등하게 */
     width: 100%;
     gap: 15px; /* 카드 사이 최소 간격 */
-    margin-top: 80px !important; /* 버튼과의 거리를 조절하여 박스를 아래로 내립니다 */
+    margin-top: 18px !important;
 }
 
 /* 개별 카드 스타일 */
@@ -305,6 +359,7 @@ input[type="text"], input[type="password"], input[type="email"] {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 12px;
     padding: 20px 10px;
     border: 1px solid #E5E8EB;
     border-radius: 20px;
@@ -324,13 +379,49 @@ input[type="text"], input[type="password"], input[type="email"] {
 /* 5. 메모 박스 (글자가 삐져나가지 않게) */
 .memo-box {
     width: 100%;
-    min-height: 80px;
+    min-height: 210px;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     background-color: #F9FAFB;
     border-radius: 12px;
-    padding: 10px;
+    padding: 12px;
     font-size: 13px;
+    overflow-y: auto;
+}
+
+.memo-item {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ECEFF3;
+    text-align: left;
+}
+
+.memo-date {
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6B7280;
+    background-color: #F3F4F6;
+}
+
+.memo-content {
+    line-height: 1.5;
+    color: #374151;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+}
+
+.memo-empty {
+    margin: auto 0;
     text-align: center;
-    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+    color: #9CA3AF;
+    font-size: 12px;
 }
 
 /* MuseDiary 푸터 */
