@@ -34,7 +34,7 @@ def generate_mood_report(entries_data: list[dict[str, Any]], mood_mapping: dict[
     system_prompt = (
         "당신은 사용자의 감정일기를 분석하는 한국어 감정 리포트 도우미입니다. "
         "입력으로 제공된 감정 이력과 감정 카운트를 바탕으로, "
-        "현재 감정 패턴을 짧고 따뜻하게 해석해 주세요. "
+        "현재 감정 패턴을 짧고 따뜻하게 해석하고 조언을해주세요. "
         "출력은 3~4문장, 300자 이내의 한국어 텍스트로만 작성하세요."
     )
     try:
