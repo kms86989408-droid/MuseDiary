@@ -22,12 +22,10 @@
         <div>{{ recommend_sad }}</div>
         <div>{{ recommend_pleasure }}</div>
     </article>
-<form method="POST">
+<form method="POST" action="{{ url_for('count') }}">
     <div class="align">
-    <button type="submit">
-    <a href="{{ url_for('ai_report') }}" class="btn btn-primary btn-jelly">
+    <button type="submit" class="btn btn-primary btn-jelly">
         분석하기
-    </a>
     </button>
 </div>
 </form>

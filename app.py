@@ -164,20 +164,21 @@ def daily_mood():
     return render_template("daily_mood.html")
 
 
-@app.route("/count", methods=["GET"])
+@app.route("/count", methods=["GET", "POST"])
 def count():
     user_id = session.get("userId")
+    if not user_id:
+        return redirect(url_for("login"))
+
     mood_counts = db.mood_mapping.find_one({"userId": user_id}) or {}
 
     if request.method == "POST":
-        print("POST /count hit", request.form, request.get_json(silent=True))
-        return "OK", 200
         entries = db.diary_entries.find_one({"userId": user_id}) or {}
-        entries_data = entries.get("analysisData", []) # analysis_data에 데이터 저장
-
-        mood_mapping = list(collection.find_one({"userId": user_id}))
+        entries_data = entries.get("analysisData", [])  # analysisData 데이터 조회
+        mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
 
         print(f"테스트입니다.{entries_data}, {mood_mapping}")
+        return redirect(url_for("ai_report"))
 
     return render_template(
         "count.html",
