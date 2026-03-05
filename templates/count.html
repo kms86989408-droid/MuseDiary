@@ -3,54 +3,46 @@
 {% block title %}오늘의 음악 추천{% endblock title %}
 
 {% block content %}
-<div class="diary-count">
-    <!-- 되돌아가기 -->
-    <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
-        <button type="submit" class="btn-jelly-back">↩ 다시 기록하기</button>
-    </form>
 
+<div class="diary-count-number">
+    <div class="back-report-button">
+        <!-- 되돌아가기 -->
+        <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
+            <button type="submit" class="btn-jelly-reback">↩ 다시 기록하기</button>
+        </form>
+
+        <!-- 분석하기 -->
+        <form method="GET" action="{{ url_for('ai_report') }}" id="report">
+            <button type="submit" class="btn-jelly-report">분석하기</button>
+        </form>
+    </div>
+
+    <!-- 4개의 감정 기록 -->
     <div class="diary-emotion">
-
-        <article style="display: flex; gap: 150px; justify-content: center;">
-            div>
-                <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;">
-            </div>
-            <div>
-                <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;">
-            </div>
-            <div>
-                <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;">
-            </div>
-            <div>
-                <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;">
-            </div>
-        </article>
-
-        <article style="display: flex; gap: 100px; justify-content: center;">
-            <div>{{ count_happy }}</div>
-            <div>{{ count_angry }}</div>
-            <div>{{ count_sad }}</div>
-            <div>{{ count_pleasure }}</div>
-        </article>
-        <div class="mood-happy">
-            <img src="{{ url_for('static', filename='image/happy.png') }}" class="music-emoji">
+        <!-- Happy -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;">
+            <span class="count">{{ count_happy }}</span>
+            <div class="memo-box">{{ recommend_happy }}</div>
         </div>
-        <h2 class="mood-title">오늘 기분이 <span class="highlight-orange">정말 좋아 보이시네요!</span></h2>
-        <p class="mood-subtitle">당신의 밝은 에너지에 어울리는 기분 좋은 리듬을 골라봤어요.</p>
-
-
-    <article style="display: flex; gap: 150px; justify-content: center;">
-        <div>{{ recommend_happy }}</div>
-        <div>{{ recommend_angry }}</div>
-        <div>{{ recommend_sad }}</div>
-        <div>{{ recommend_pleasure }}</div>
-    </article>
-<form method="POST" action="{{ url_for('count') }}">
-    <div class="align">
-    <button type="submit" class="btn-jelly-report">
-        분석하기
-    </button>
-</div>
-</form>
+        <!-- Angry -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;">
+            <span class="count">{{ count_angry }}</span>
+            <div class="memo-box">{{ recommend_angry }}</div>
+        </div>
+        <!-- Sad -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;">
+            <span class="count">{{ count_sad }}</span>
+            <div class="memo-box">{{ recommend_sad }}</div>
+        </div>
+        <!-- pleasure -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;">
+            <span class="count">{{ count_pleasure }}</span>
+            <div class="memo-box">{{ recommend_pleasure }}</div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

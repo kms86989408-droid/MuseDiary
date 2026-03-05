@@ -17,6 +17,17 @@
     border: 1px solid rgba(0, 0, 0, 0.02);
 }
 
+.diary-count-number {
+    background-color: var(--MuseDiary-white);
+    padding: 40px;
+    border-radius: 24px; 
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 100px auto; /* 상하 100px 좌우 auto */
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
 .diary-count {
     background-color: var(--MuseDiary-white);
     border-radius: 24px;
@@ -212,6 +223,103 @@ input[type="text"], input[type="password"], input[type="email"] {
     text-decoration: none;
     font-size: 1rem;
     border: none;
+}
+
+
+/* 전체 감싸는 영역 */
+.diary-count-number {
+    display: flex;
+    flex-direction: column; /* 위(버튼/헤더)에서 아래(카드)로 배치 */
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* 너무 넓어지지 않게 제한 */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 버튼 두 개를 감싼 컨테이너 */
+.back-report-button {
+    display: flex !important;           /* 내부 요소를 가로로 나열 */
+    justify-content: space-between !important; /* 왼쪽 끝, 오른쪽 끝으로 강제 분리 */
+    align-items: center;                /* 버튼들 높이 중앙 맞춤 */
+    width: 100% !important;             /* 가로 길이를 부모만큼 꽉 채워야 벌어집니다 */
+    max-width: 100%;                    /* 혹시 모를 너비 제한 해제 */
+    margin: 0 0 30px 0 !important;      /* 아래 카드들과의 간격만 유지 */
+    padding: 0 10px;                    /* 양옆 벽에 너무 붙지 않게 살짝 여백 */
+}
+
+/* 2. 각 폼 요소가 한 줄을 다 차지하지 못하게 함 */
+.back-report-button form {
+    display: inline-block !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+.btn-jelly-reback {
+    background-color: #FF8200; /* 오렌지색으로 통일 */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;       /* 글자가 두 줄로 꺾이지 않게 */
+    margin-top: 50px;
+}
+/* 3. 분석하기 버튼 (오른쪽 버튼) */
+.btn-jelly-report {
+    background-color: #FF8200; /* 오렌지색으로 통일 */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;       /* 글자가 두 줄로 꺾이지 않게 */
+    margin-top: 50px; 
+}
+
+/* 감정 카드 영역 (가로로 4개 나열) */
+.diary-emotion {
+    display: flex; /* 가로 정렬 활성화 */
+    justify-content: space-between; /* 카드 사이 간격을 균등하게 */
+    width: 100%;
+    gap: 15px; /* 카드 사이 최소 간격 */
+    margin-top: 80px !important; /* 버튼과의 거리를 조절하여 박스를 아래로 내립니다 */
+}
+
+/* 개별 카드 스타일 */
+.card {
+    flex: 1; /* 4개 카드가 동일한 너비를 가짐 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    border: 1px solid #E5E8EB;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.card img {
+    margin-bottom: 20px;
+}
+
+.count {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 5. 메모 박스 (글자가 삐져나가지 않게) */
+.memo-box {
+    width: 100%;
+    min-height: 80px;
+    background-color: #F9FAFB;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
 }
 
 /* MuseDiary 푸터 */
