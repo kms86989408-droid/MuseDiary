@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, session
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, session, g
 from flask_bcrypt import Bcrypt
+from functools import wraps
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
 import jwt
@@ -48,6 +49,27 @@ MOOD_CONFIG = {
     },
 }
 
+def login_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        token = request.cookies.get("token")
+        if not token:
+            return redirect(url_for("login"))
+        
+        try:
+            payload = jwt.decode(
+                token,
+                app.config["SECRET_KEY"],
+                algorithms=["HS256"]
+            )
+            g.user_id =payload["user_id"]
+        except jwt.ExpiredSignatureError:
+            return redirect(url_for("login"))
+        except jwt.InvalidTokenError:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return wrapper
+
 # 홈
 @app.route("/")
 def home():
@@ -83,7 +105,7 @@ def login():
             samesite="LAX"
         )
         return response
-    return "로그인실패", 401
+    return "<script>alert('로그인 실패'); history.back();</script>"
 
 # 회원가입
 @app.route("/register", methods=["GET", "POST"])
@@ -99,9 +121,6 @@ def register():
     if not id or not email or not pw:
         return "ID, Email, PW 누락", 400
 
-    # 중복 ID / Email 확인
-
-
     hash_pw = bcrypt.generate_password_hash(pw) # pw 해쉬암호화
 
     db.users.insert_one({
@@ -113,6 +132,7 @@ def register():
 
 
 @app.route("/daily-mood", methods=["GET", "POST"])
+@login_required
 def daily_mood():
     if request.method == "POST":
         userId = session.get("userId")  # 사용자 로그인 Id get
@@ -166,6 +186,7 @@ def daily_mood():
 
 
 @app.route("/count", methods=["GET", "POST"])
+@login_required
 def count():
     user_id = session.get("userId")
     if not user_id:
@@ -181,15 +202,35 @@ def count():
 
     happy_contents = [item.get("content") for item in entries_data if item.get("mood") == "happy"]
     happy_latest5 = list(reversed(happy_contents))[:5]
+    happy_date =[
+        f"{d.year}, {d.month}, {d.day}"
+        for item in entries_data
+        if item.get("mood") == "happy" and (d := item.get("createdAt"))
+    ]
 
     sad_contents = [item.get("content") for item in entries_data if item.get("mood") == "sad"]
     sad_latest5 = list(reversed(sad_contents))[:5]
+    sad_date =[
+        f"{d.year}, {d.month}, {d.day}"
+        for item in entries_data
+        if item.get("mood") == "sad" and (d := item.get("createdAt"))
+    ]
 
     angry_contents = [item.get("content") for item in entries_data if item.get("mood") == "angry"]
     angry_latest5 = list(reversed(angry_contents))[:5]
+    angry_date =[
+        f"{d.year}, {d.month}, {d.day}"
+        for item in entries_data
+        if item.get("mood") == "angry" and (d := item.get("createdAt"))
+    ]
 
     pleasure_contents = [item.get("content") for item in entries_data if item.get("mood") == "pleasure"]
     pleasure_latest5 = list(reversed(pleasure_contents))[:5]
+    pleasure_date =[
+        f"{d.year}, {d.month}, {d.day}"
+        for item in entries_data
+        if item.get("mood") == "pleasure" and (d := item.get("createdAt"))
+    ]
 
     if request.method == "POST":
         ai_message = generate_mood_report(entries_data, mood_mapping)
@@ -210,30 +251,53 @@ def count():
     
 
     
-@app.route("/happy")
+@app.route("/happy", methods=["GET"])
+@login_required
 def happy():
+    if request.method == "GET":
+        return render_template("daily_mood.html")
+    
     return render_template("happy.html")
 
 
-@app.route("/angry")
+@app.route("/angry", methods=["GET"])
+@login_required
 def angry():
+    if request.method == "GET":
+        return render_template("daily_mood.html")
     return render_template("angry.html")
 
 
-@app.route("/sad")
+@app.route("/sad", methods=["GET"])
+@login_required
 def sad():
+    if request.method == "GET":
+        return render_template("daily_mood.html")
     return render_template("sad.html")
 
 
-@app.route("/pleasure")
+@app.route("/pleasure", methods=["GET"])
+@login_required
 def pleasure():
+    if request.method == "GET":
+        return render_template("daily_mood.html")
     return render_template("pleasure.html")
 
-@app.route("/ai_report")
+@app.route("/ai_report", methods=["GET"]) # COUNT 페이지로 이동
+@login_required
 def ai_report():
+    if request.method == "GET":
+        return render_template("count.html")
     user_name = session.get("userId", "000")
     ai_message = session.get("ai_report_message")
     return render_template("ai_report.html", user_name=user_name, ai_message=ai_message)
+
+@app.route("/logout")
+def logout():
+    response = make_response(redirect(url_for("login")))
+    response.delete_cookie("token", path="/")
+    session.clear()
+    return response
     
 
 
