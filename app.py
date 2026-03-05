@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import jwt
 import datetime
 import os
+import random
 import requests
 from dotenv import load_dotenv
 
@@ -24,6 +25,25 @@ db = client.get_default_database()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secret_key
 bcrypt = Bcrypt(app) # bcrypt 초기화
+
+MOOD_CONFIG = {
+    "happy": {
+        "template": "happy.html",
+        "playlist_url": os.getenv("GENIE_PLAYLIST_HAPPY", "https://www.genie.co.kr/playlist/detailView?plmSeq=31070"),
+    },
+    "angry": {
+        "template": "angry.html",
+        "playlist_url": os.getenv("GENIE_PLAYLIST_ANGRY", "https://www.genie.co.kr/playlist/detailView?plmSeq=17505"),
+    },
+    "sad": {
+        "template": "sad.html",
+        "playlist_url": os.getenv("GENIE_PLAYLIST_SAD", "https://www.genie.co.kr/playlist/detailView?plmSeq=31065"),
+    },
+    "pleasure": {
+        "template": "pleasure.html",
+        "playlist_url": os.getenv("GENIE_PLAYLIST_PLEASURE", "https://www.genie.co.kr/playlist/detailView?plmSeq=17266"),
+    },
+}
 
 # 홈
 @app.route("/")
@@ -116,15 +136,26 @@ def daily_mood():
             {"$inc" : {mood : 1}},
             upsert = True
         )
-        # 클릭시 페이지 넘길꺼
-        if mood == "happy" :
-            return render_template("happy.html")
-        elif mood == "angry" :
-            return render_template("angry.html")
-        elif mood == "sad" :
-            return render_template("sad.html")
-        elif mood == "pleasure" :
-            return render_template("sad.html")
+        mood_info = MOOD_CONFIG.get(mood)
+        if not mood_info:
+            return "잘못된 mood 값입니다.", 400
+
+        song = "추천곡 없음"
+        singer = "-"
+
+        try:
+            titles = crawl_genie_playlist(mood_info["playlist_url"])
+            if titles:
+                picked = random.choice(titles)
+                if " - " in picked:
+                    song, singer = [x.strip() for x in picked.split(" - ", 1)]
+                else:
+                    song = picked
+                    singer = "Unknown Artist"
+        except Exception as e:
+            print(f"[{mood}] 크롤링 실패: {e}")
+
+        return render_template(mood_info["template"], singer=singer, song=song)
 
         # return redirect(url_for("daily_mood"))
     return render_template("daily_mood.html")
@@ -167,27 +198,26 @@ def sad():
 def pleasure():
     return render_template("pleasure.html")
 
-# 크롤링 
-def Crawling_insert():
+# 크롤링
+def crawl_genie_playlist(playlist_url):
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get('https://www.genie.co.kr/playlist/detailView?plmSeq=31070', headers=headers)
+    res = requests.get(playlist_url, headers=headers)
     res.raise_for_status()
+    soup = BeautifulSoup(res.text, "html.parser")
 
-    happySong = []
-    happy_scraps = soup.select("table.list-wrap a.title")
+    songs = []
+    scraps = soup.select("table.list-wrap a.title")
 
-    if not happy_scraps:
-        happy_scraps = soup.select("a.title")
+    if not scraps:
+        scraps = soup.select("a.title")
 
-    for i in happy_scraps :
+    for i in scraps :
         k = i.get_text(strip=True)
         if k:
-            happy_scraps.append(k)
+            songs.append(k)
     seen = set()
-    titles = [x for x in titles if not (x in seen or seen.add(x))]
-
-print(happySong)
-
+    titles = [x for x in songs if not (x in seen or seen.add(x))]
+    return titles
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=8080, debug=True)
