@@ -94,7 +94,7 @@ def login():
 
         token = jwt.encode({
             "user_id" : user["id"],
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            "exp": datetime.datetime.now() + datetime.timedelta(hours=1)
         }, app.config["SECRET_KEY"], algorithm="HS256")
 
         response = make_response(redirect(url_for("daily_mood"))) # 로그인 성공 메인페이지 이동
@@ -139,7 +139,8 @@ def daily_mood():
         
         mood = request.form.get("mood") # 기분 아이콘 
         content = request.form.get("content","") # 한줄 일기
-        createdAt = datetime.datetime.now().strftime("%Y-%m-%d'T'%H:%M:%S") # 현재 날짜 시간
+        createdAt = datetime.datetime.now()  # 현재 날짜 시간
+
 
         mood_info = MOOD_CONFIG.get(mood)
         if not mood_info:
@@ -180,8 +181,9 @@ def daily_mood():
             upsert = True
         )
         return render_template(mood_info["template"], singer=singer, song=song)
+    elif request.method == "GET":
+        return render_template("daily_mood.html")
 
-        # return redirect(url_for("daily_mood"))
     return render_template("daily_mood.html")
 
 
@@ -201,7 +203,7 @@ def count():
     mood_mapping = db.mood_mapping.find_one({"userId": user_id}) or {}
 
     happy_contents = [item.get("content") for item in entries_data if item.get("mood") == "happy"]
-    happy_latest5 = list(reversed(happy_contents))[:5]
+    happy_latest5 = list(reversed(happy_contents))#[:5]
     happy_date =[
         f"{d.year}, {d.month}, {d.day}"
         for item in entries_data
@@ -209,7 +211,7 @@ def count():
     ]
 
     sad_contents = [item.get("content") for item in entries_data if item.get("mood") == "sad"]
-    sad_latest5 = list(reversed(sad_contents))[:5]
+    sad_latest5 = list(reversed(sad_contents))#[:5]
     sad_date =[
         f"{d.year}, {d.month}, {d.day}"
         for item in entries_data
@@ -217,7 +219,7 @@ def count():
     ]
 
     angry_contents = [item.get("content") for item in entries_data if item.get("mood") == "angry"]
-    angry_latest5 = list(reversed(angry_contents))[:5]
+    angry_latest5 = list(reversed(angry_contents))#[:5]
     angry_date =[
         f"{d.year}, {d.month}, {d.day}"
         for item in entries_data
@@ -225,7 +227,7 @@ def count():
     ]
 
     pleasure_contents = [item.get("content") for item in entries_data if item.get("mood") == "pleasure"]
-    pleasure_latest5 = list(reversed(pleasure_contents))[:5]
+    pleasure_latest5 = list(reversed(pleasure_contents))#[:5]
     pleasure_date =[
         f"{d.year}, {d.month}, {d.day}"
         for item in entries_data
