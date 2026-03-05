@@ -3,30 +3,35 @@
 {% block title %}오늘의 감정{% endblock title %}
 
 {% block content %}
-<h2>오늘의 감정 기록</h2>
-<p>로그인 후 감정과 추천 음악을 기록하는 페이지입니다.</p>
+<!-- count.html 가는 버튼 -->
 <div class="align">
-    <a href="{{ url_for('count') }}" class="btn btn-primary btn-jelly">
-        나의 기록
-    </a>
+    <button type="submit" class="btn-jelly-count">지난 기록 꺼내보기</button>
 </div>
 
-<form method="POST" class="mood-form">
-    <p>오늘의 기분</p>
-    <input type="hidden" id="mood" name="mood" value="happy">
-
-    <div id="mood-list">
-        <div class="mood-buttons" role="group" aria-label="감정 선택">
-            <button type="button" class="mood-btn" data-mood="happy">희</button>
-            <button type="button" class="mood-btn" data-mood="angry">노</button>
-            <button type="button" class="mood-btn" data-mood="sad">애</button>
-            <button type="button" class="mood-btn" data-mood="pleasure">락</button>
-        </div>
-        <textarea name="content" id="content" cols="60" rows="3" placeholder="오늘 감정은 어땠나요? 편하게 작성해주세요"></textarea>
+<div class="diary">
+    <div class="diary-header">
+        <h2 class="diary-title">오늘의 무드 조각</h2>
+        <p class="diary-subtitle">기록이 음악이 되는 순간, 뮤직다이어리</p>
     </div>
 
-    <button type="submit">저장</button>
-</form>
+    <form method="POST" action="{{ url_for('daily_mood') }}" id="mood-form">
+        <p class="diary-label">오늘의 기분은 어떠신가요?</p>
+        <input type="hidden" id="mood" name="mood" value="happy">
+
+        <div id="mood-list">
+            <div class="mood-buttons">
+                <button type="button" class="mood-btn" data-mood="happy">희</button>
+                <button type="button" class="mood-btn" data-mood="angry">노</button>
+                <button type="button" class="mood-btn" data-mood="sad">애</button>
+                <button type="button" class="mood-btn" data-mood="pleasure">락</button>
+            </div>
+
+            <textarea name="content" id="content" cols="60" rows="3" placeholder="오늘은 어떤 일이 있었나요? 짧은 메모를 남겨도 좋아요! (선택사항)"></textarea>
+        </div>
+
+        <button type="submit" class="btn-jelly-save">저장하고 음악 페어링하기</button>
+    </form>
+</div>
 
 <script>
     const moodInput = document.getElementById("mood");
