@@ -1,48 +1,663 @@
-/* 회원가입 페이지 */
-.register-form {
-    input {
-        background-color: #5f9ea0;
-        border-style: none;
-        border-radius: 20px;
-    }
-}
-* {
-    font-family: "Stylish", sans-serif;
-}
-body {
-    background-color: #f8f9fa;
-}
-/* 회원가입 버튼 (파란색) */
-.register {
-    text-align: left;
-}
-/* 로그인 버튼 (빨간색) */
-.login {
-    text-align: right;
+:root {
+    --MuseDiary-orange: #FF8200;
+    --MuseDiary-navy: #102E52;
+    --MuseDiary-white: #FFFFFF;
+    --MuseDiary-bg: #F2F4F6;
+    --MuseDiary-gray: #4E5968;
 }
 
+.login, .register, .diary, .diary-music {
+    background-color: var(--MuseDiary-white);
+    padding: 40px;
+    border-radius: 24px; 
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 80px auto; /* 상하 100px 좌우 auto */
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.diary-count-number {
+    background-color: var(--MuseDiary-white);
+    padding: 40px;
+    border-radius: 24px; 
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 100px auto; /* 상하 100px 좌우 auto */
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.ai-report {
+    background-color: var(--MuseDiary-white);
+    padding: 40px;
+    border-radius: 24px; 
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 120px auto; /* 상하 100px 좌우 auto */
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.diary-count {
+    background-color: var(--MuseDiary-white);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 90%;
+    margin: 80px auto; /* 상하 100px 좌우 auto */
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;   /* 자식들을 가로 중앙으로 */
+    gap: 25px;             /* 요소 간 세로 간격 */
+}
+
+* {
+    font-family: "Stylish", sans-serif;
+    text-align: center;
+}
+
+.login-title, .register-title, .diary-title {
+    color: var(--MuseDiary-navy);
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.diary-subtitle, .diary-label {
+    color: var(--MuseDiary-navy);
+    font-weight: 400;
+}
+
+/* 1. 폼 전체 레이아웃 (중앙 정렬 핵심) */
 .mood-form {
     display: flex;
     flex-direction: column;
+    align-items: center; /* 모든 요소를 가로축 중앙으로 */
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* 아이디, 이메일, 비밀번호 */
+.input-group {
+    margin-bottom: 12px; /* 간격 */
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #E5E8EB;
+    border-radius: 12px;
+    background-color: #F9FAFB;
+}
+
+/* 네이비 젤리 버튼 스타일 */
+.btn-jelly-login, .btn-jelly-register {
+    width: 100%;
+    background-color: var(--MuseDiary-navy);
+    color: var(--MuseDiary-white);
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+.btn-jelly-save, .btn-jelly-count {
+    width: 100%;
+    background-color: var(--MuseDiary-orange);
+    color: var(--MuseDiary-white);
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+/* 감정 선택 영역 컨테이너 */
+#mood-list {
+    display: flex;
+    flex-direction: column; /* 버튼 그룹과 메모창을 위아래로 */
+    align-items: center; /* 자식 요소들을 가로축 중앙으로! */
+    gap: 20px; /* 요소 사이 간격 넉넉히 */
+    width: 100%;            /* 부모 너비에 꽉 차게 */
+    max-width: 600px;       /* 너무 넓어지지 않게 한계 설정 */
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15); /* 은은한 그림자 */
+    border: 1px solid #F2F4F6;
+}
+
+/* 3. 버튼들만 가로로 한 줄 배치 */
+.mood-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+/* 버튼 각각 */
+.mood-btn {
+    flex: 1; /* 4개 버튼이 동일한 너비를 가짐 */
+    height: 80px;
+    border-radius: 14px;
+    border: 1px solid #E5E8EB;
+    background-color: #FFFFFF !important; /* 기본 배경 흰색 강제 */
+    color: #4E5968 !important;            /* 기본 글자 회색 강제 */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* 자바스크립트로 추가될 선택 상태 클래스 (오렌지 포인트) */
+.mood-btn.is-selected {
+    background-color: #f3bf88 !important; /* 오렌지색 배경 */
+    color: #FFFFFF !important;            /* 글자 하얗게 */
+    border-color: #f3bf88 !important;
+    transform: translateY(-5px);          /* 살짝 들리는 효과 */
+    box-shadow: 0 8px 16px rgba(255, 130, 0, 0.3);
+}
+
+/* 코멘트 */
+#content {
+    width: 100%; /* 버튼 그룹과 너비 맞춤 */
+    min-height: 120px;
+    padding: 16px;
+    border: 1px solid #E5E8EB;
+    border-radius: 16px;
+    background-color: #F9FAFB;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333D4B;
+    resize: none; /* 사용자가 크기 조절 못하게 고정 */
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+/* pleasure 이모지 */
+.mood-pleasure {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* 뒤로가기 버튼 */
+.btn-jelly-back {
+    padding: 10px 30px;
+    background-color: var(--MuseDiary-orange);
+    color: var(--MuseDiary-white);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+.diary-music {
+    text-align: center;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.music-header {
+    background-color: #F9FAFB;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 1px solid #E5E8EB;
+    /* 뚜렷한 그림자 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.music-emoji {
+    width: 120px; /* 결과창이니까 조금 더 크게 */
+    margin-top: 20px;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 10px 15px rgba(255, 130, 0, 0.2));
+}
+
+.music-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* 유튜브 버튼 */
+.youtube-link {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1rem;
+    border: none;
+}
+
+
+/* 전체 감싸는 영역 */
+.diary-count-number {
+    display: flex;
+    flex-direction: column; /* 위(버튼/헤더)에서 아래(카드)로 배치 */
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* 너무 넓어지지 않게 제한 */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 버튼 두 개를 감싼 컨테이너 */
+.back-report-button {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100% !important;             /* 가로 길이를 부모만큼 꽉 채워야 벌어집니다 */
+    max-width: 100%;                    /* 혹시 모를 너비 제한 해제 */
+    margin: 0 0 30px 0 !important;      /* 아래 카드들과의 간격만 유지 */
+    padding: 0 10px;                    /* 양옆 벽에 너무 붙지 않게 살짝 여백 */
+}
+
+/* 2. 각 폼 요소가 한 줄을 다 차지하지 못하게 함 */
+.back-report-button form {
+    display: inline-block !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+#back-link {
+    justify-self: start;
+}
+
+#report {
+    justify-self: end;
+}
+
+.count-page-title {
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    color: #222;
+}
+
+.emotion-label-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.emotion-label {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: #3A3A3A;
+    letter-spacing: 2px;
+    padding: 4px 0;
+    border-radius: 10px;
+}
+
+.emotion-label-row .emotion-label:nth-child(1) {
+    color: #D4A100;
+    background-color: #FFF9DD;
+}
+
+.emotion-label-row .emotion-label:nth-child(2) {
+    color: #E05E74;
+    background-color: #FFE8ED;
+}
+
+.emotion-label-row .emotion-label:nth-child(3) {
+    color: #4A95B3;
+    background-color: #E8F5FB;
+}
+
+.emotion-label-row .emotion-label:nth-child(4) {
+    color: #D1834C;
+    background-color: #FFF0E4;
+}
+
+.btn-jelly-reback {
+    background-color: #FF8200; /* 오렌지색으로 통일 */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;       /* 글자가 두 줄로 꺾이지 않게 */
+    margin-top: 50px;
+}
+/* 3. 분석하기 버튼 (오른쪽 버튼) */
+.btn-jelly-report {
+    background-color: #FF8200; /* 오렌지색으로 통일 */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;       /* 글자가 두 줄로 꺾이지 않게 */
+    margin-top: 50px; 
+}
+
+/* 감정 카드 영역 (가로로 4개 나열) */
+.diary-emotion {
+    display: flex; /* 가로 정렬 활성화 */
+    justify-content: space-between; /* 카드 사이 간격을 균등하게 */
+    width: 100%;
+    gap: 15px; /* 카드 사이 최소 간격 */
+    margin-top: 18px !important;
+}
+
+/* 개별 카드 스타일 */
+.card {
+    flex: 1; /* 4개 카드가 동일한 너비를 가짐 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 10px;
+    border: 1px solid #E5E8EB;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.card img {
+    margin-bottom: 20px;
+}
+
+.count {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 5. 메모 박스 (글자가 삐져나가지 않게) */
+.memo-box {
+    width: 100%;
+    min-height: 210px;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #F9FAFB;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    overflow-y: auto;
+}
+
+.memo-item {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ECEFF3;
+    text-align: left;
+}
+
+.memo-date {
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6B7280;
+    background-color: #F3F4F6;
+}
+
+.memo-content {
+    line-height: 1.5;
+    color: #374151;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+}
+
+.memo-empty {
+    margin: auto 0;
+    text-align: center;
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+/* MuseDiary 푸터 */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 8px 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    background: #f3f3f3;
+    color: #111;
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+.brand-header {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 18px 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #d7dce2;
+}
+
+.brand-header-title {
+    margin: 0;
+    font-size: clamp(28px, 4.5vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--MuseDiary-navy);
+}
+
+.brand-header-subtitle {
+    margin: 0;
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: 400;
+    color: #627182;
+    word-break: keep-all;
+}
+
+.page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 40px 48px;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 70px;
+}
+
+.back-link {
+    font-size: 52px;
+    color: #111;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.title-icon {
+    width: 84px;
+    height: 84px;
+    border: 4px solid #111;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.title {
+    margin: 0;
+    font-size: 66px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.report {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    background-color: var(--MuseDiary-white);
+    border-radius: 24px;
+    padding: 28px 32px;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+}
+
+.robot-wrap {
+    width: 260px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.chip {
+    width: 155px;
+    height: 155px;
+    margin: 0 auto 16px;
+    border: 6px solid #111;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 66px;
+    font-weight: 900;
+    position: relative;
+}
+
+.chip::before,
+.chip::after {
+    content: "";
+    position: absolute;
+    top: -18px;
+    width: 9px;
+    height: 12px;
+    background: #111;
+    border-radius: 3px;
+}
+
+.chip::before {
+    left: 24px;
+    box-shadow: 22px 0 #111, 44px 0 #111, 66px 0 #111, 88px 0 #111;
+}
+
+.chip::after {
+    right: 24px;
+    box-shadow: -22px 0 #111, -44px 0 #111, -66px 0 #111, -88px 0 #111;
+}
+
+.robot {
+    font-size: 190px;
+    line-height: 1;
+}
+
+.message {
+    margin: 0;
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.5px;
+    text-align: center;
+    white-space: pre-line;
+    flex: 1;
+    word-break: keep-all;
+}
+
+.ai-report-page {
+    background-color: var(--MuseDiary-white);
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    margin: 80px auto;
+    padding: 32px 36px 40px;
+}
+
+.ai-report-top {
+    margin-bottom: 28px;
+}
+
+.ai-report-header-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     gap: 12px;
 }
 
-.mood-buttons {
-    display: flex;
-    gap: 8px;
+.ai-report-nav-btn {
+    margin-top: 0;
+    text-decoration: none;
+    padding: 12px 22px;
+    display: inline-block;
 }
 
-.mood-btn {
-    min-width: 52px;
-    padding: 8px 12px;
-    border: 1px solid #bbb;
-    border-radius: 8px;
-    background-color: #fff;
-    cursor: pointer;
+.ai-report-back-btn {
+    justify-self: start;
 }
 
-.mood-btn.is-selected {
-    background-color: #222;
-    color: #fff;
-    border-color: #222;
+.ai-report-count-btn {
+    justify-self: end;
+}
+
+.ai-report-title {
+    margin: 0;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    color: #111827;
+}
+
+.ai-report-page .report {
+    border: 1px solid #E5E8EB;
+    background-color: #F9FAFB;
+    box-shadow: none;
+    padding: 30px 32px;
+}
+
+.ai-report-page .message {
+    font-size: 46px;
+    line-height: 1.5;
+    color: #1F2937;
+}
+
+@media (max-width: 900px) {
+    .brand-header {
+        padding: 14px 12px 12px;
+    }
+
+    .title { font-size: 44px; }
+    .title-icon { width: 62px; height: 62px; font-size: 28px; }
+    .message { font-size: 34px; }
+    .robot { font-size: 130px; }
+    .chip { width: 120px; height: 120px; font-size: 48px; }
+    .report { flex-direction: column; padding: 24px; }
+    .ai-report-header-row { grid-template-columns: 1fr; }
+    .ai-report-back-btn,
+    .ai-report-count-btn { justify-self: center; }
+    .ai-report-title { font-size: 32px; }
+    .ai-report-page .message { font-size: 30px; }
 }

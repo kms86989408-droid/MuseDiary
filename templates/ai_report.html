@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}AI 분석 결과{% endblock title %}
+
+{% block content %}
+<div class="page ai-report-page">
+    <header class="top ai-report-top">
+        <div class="ai-report-header-row">
+            <a href="{{ url_for('daily_mood') }}" class="btn-jelly-reback ai-report-nav-btn ai-report-back-btn">↩ 다시 기록하기</a>
+            <h1 class="ai-report-title">AI 분석결과 {{ user_name }} 님</h1>
+            <a href="{{ url_for('count') }}" class="btn-jelly-report ai-report-nav-btn ai-report-count-btn">나의 감정기록</a>
+        </div>
+    </header>
+    <section class="report">
+        <p class="message">{{ ai_message or "아직 분석 결과가 없습니다.\ncount 페이지에서 분석하기 버튼을 눌러주세요." }}</p>
+    </section>
+</div>
+{% endblock content %}

@@ -49,3 +49,8 @@ from jinja2 import Template
 # MuseDiary
 기분에따른 음악추천과 감정일기를 제공합니다.
 이모티콘도 예뻐요
+
+## Database
+
+- MongoDB 사용
+- 상세 스키마 문서: [`db/README.md`](db/README.md)

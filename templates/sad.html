@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}오늘의 음악 추천{% endblock title %}
+
+{% block content %}
+<div class="diary-music">
+    <!-- 되돌아가기 -->
+    <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
+        <button type="submit" class="btn-jelly-back">↩ 다시 기록하기</button>
+    </form>
+
+    <!-- sad 이모지 -->
+    <div class="music-header">
+        <div class="mood-sad">
+            <img src="{{ url_for('static', filename='image/sad.png') }}" class="music-emoji">
+        </div>
+        <h2 class="mood-title">오늘 기분이 <span class="highlight-orange">슬퍼보여요!</span></h2>
+        <p class="mood-subtitle">지친 마음을 잠시 내려놓으세요. 당신에게 작은 위로가 될 곡들을 모아봤어요.</p>
+
+        <!-- 노래 추천 -->
+        <div class="song-info">
+            <div class="song-info-singer"></div>
+                <div class="music-icon">🎵</div>
+                <p>추천 노래 : {% if singer %}{{ singer }} - {{ song }}{% else %}{{ song }}{% endif %}</p>
+            </div>
+            <!-- <a href="" target="_blank" class="youtube-link">링크를 눌러주세요!</a> -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

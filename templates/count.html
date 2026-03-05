@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}오늘의 음악 추천{% endblock title %}
+
+{% block content %}
+
+<div class="diary-count-number">
+    <div class="back-report-button">
+        <!-- 되돌아가기 -->
+        <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
+            <button type="submit" class="btn-jelly-reback">↩ 다시 기록하기</button>
+        </form>
+
+        <h2 class="count-page-title">나의 감정기록</h2>
+
+        <!-- 분석하기 -->
+        <form method="POST" action="{{ url_for('count') }}" id="report">
+            <button type="submit" class="btn-jelly-report">분석하기</button>
+        </form>
+    </div>
+
+    <div class="emotion-label-row" aria-label="감정 레이블">
+        <span class="emotion-label">희</span>
+        <span class="emotion-label">노</span>
+        <span class="emotion-label">애</span>
+        <span class="emotion-label">락</span>
+    </div>
+
+    <!-- 4개의 감정 기록 -->
+    <div class="diary-emotion">
+        <!-- Happy -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;">
+            <span class="count">{{ count_happy }}</span>
+            <div class="memo-box">
+                {% if recommend_happy %}
+                    {% for entry in recommend_happy %}
+                        <div class="memo-item">
+                            <div class="memo-date">{{ entry.date }}</div>
+                            <div class="memo-content">{{ entry.content }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="memo-empty">아직 기록이 없어요.</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Angry -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;">
+            <span class="count">{{ count_angry }}</span>
+            <div class="memo-box">
+                {% if recommend_angry %}
+                    {% for entry in recommend_angry %}
+                        <div class="memo-item">
+                            <div class="memo-date">{{ entry.date }}</div>
+                            <div class="memo-content">{{ entry.content }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="memo-empty">아직 기록이 없어요.</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Sad -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;">
+            <span class="count">{{ count_sad }}</span>
+            <div class="memo-box">
+                {% if recommend_sad %}
+                    {% for entry in recommend_sad %}
+                        <div class="memo-item">
+                            <div class="memo-date">{{ entry.date }}</div>
+                            <div class="memo-content">{{ entry.content }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="memo-empty">아직 기록이 없어요.</div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- pleasure -->
+        <div class="card">
+            <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;">
+            <span class="count">{{ count_pleasure }}</span>
+            <div class="memo-box">
+                {% if recommend_pleasure %}
+                    {% for entry in recommend_pleasure %}
+                        <div class="memo-item">
+                            <div class="memo-date">{{ entry.date }}</div>
+                            <div class="memo-content">{{ entry.content }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="memo-empty">아직 기록이 없어요.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
