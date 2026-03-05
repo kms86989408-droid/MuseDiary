@@ -6,15 +6,30 @@
     --MuseDiary-gray: #4E5968;
 }
 
-.login, .register, .diary {
+.login, .register, .diary, .diary-music {
     background-color: var(--MuseDiary-white);
     padding: 40px;
-    border-radius: 24px; /* 토스풍의 부드러운 곡선 */
+    border-radius: 24px; 
     box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
     max-width: 400px;
     margin: 80px auto; /* 상하 100px 좌우 auto */
     text-align: center;
     border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.diary-count {
+    background-color: var(--MuseDiary-white);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 90%;
+    margin: 80px auto; /* 상하 100px 좌우 auto */
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;   /* 자식들을 가로 중앙으로 */
+    gap: 25px;             /* 요소 간 세로 간격 */
 }
 
 * {
@@ -108,7 +123,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 /* 버튼 각각 */
 .mood-btn {
     flex: 1; /* 4개 버튼이 동일한 너비를 가짐 */
-    height: 60px;
+    height: 80px;
     border-radius: 14px;
     border: 1px solid #E5E8EB;
     background-color: #FFFFFF !important; /* 기본 배경 흰색 강제 */
@@ -151,9 +166,52 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 /* 뒤로가기 버튼 */
-.back-nav a {
-    text-decoration: none !important; /* 밑줄 금지 */
-    color: #212529 !important;
+.btn-jelly-back {
+    padding: 10px 30px;
+    background-color: var(--MuseDiary-orange);
+    color: var(--MuseDiary-white);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+.diary-music {
+    text-align: center;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.music-header {
+    background-color: #F9FAFB;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 1px solid #E5E8EB;
+    /* 뚜렷한 그림자 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.music-emoji {
+    width: 120px; /* 결과창이니까 조금 더 크게 */
+    margin-top: 20px;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 10px 15px rgba(255, 130, 0, 0.2));
+}
+
+.music-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* 유튜브 버튼 */
+.youtube-link {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1rem;
+    border: none;
 }
 
 /* MuseDiary 푸터 */

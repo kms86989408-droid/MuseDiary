@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 
+{% block title %}오늘의 음악 추천{% endblock title %}
+
 {% block content %}
-<div class="mood-container">
+<div class="diary-music">
     <!-- 되돌아가기 -->
-    <div class="back-nav">
-        <a href="{{ url_for('daily_mood') }}">
-            <span style="font-size: 1.5rem;">↩</span>
-        </a>
-    </div>
+    <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
+        <button type="submit" class="btn-jelly-back">↩ 다시 기록하기</button>
+    </form>
 
-    <!-- happy 이모지 -->
-    <div class="mood-angry">
-        <img src="image/angry.png">
-    </div>
+    <!-- angry 이모지 -->
+    <div class="music-header">
+        <div class="mood-angry">
+            <img src="{{ url_for('static', filename='image/angry.png') }}" class="music-emoji">
+        </div>
+        <h2 class="mood-title">오늘 기분이 <span class="highlight-orange">화나보여요!</span></h2>
+        <p class="mood-subtitle">참지 말고 음악으로 터뜨리세요. 스트레스를 날려줄 선율이에요.</p>
 
-    <!-- 기분 표현 -->
-    <h1 class="mood-title">화나!!</h1>
-
-    <!-- 노래 추천 -->
-    <div class="song-info">
-        <p>추천 노래 : {% if singer %}{{ singer }} - {{ song }}{% else %}{{ song }}{% endif %}</p>
-
-        <a href="" target="_blank" class="youtube-link">링크를 눌러주세요!</a>
+        <!-- 노래 추천 -->
+        <div class="song-info">
+            <div class="song-info-singer">
+                <div class="music-icon">🎵</div>
+                <p>추천 노래 : {% if singer %}{{ singer }} - {{ song }}{% else %}{{ song }}{% endif %}</p>
+            </div>
+            <!-- <a href="" target="_blank" class="youtube-link">링크를 눌러주세요!</a> -->
+        </div>
     </div>
 </div>
 

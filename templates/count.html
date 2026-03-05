@@ -1,35 +1,43 @@
 {% extends "base.html" %}
 
+{% block title %}오늘의 음악 추천{% endblock title %}
+
 {% block content %}
-<div class="mood-container">
+<div class="diary-count">
     <!-- 되돌아가기 -->
-    <div class="back-nav">
-        <a href="{{ url_for('daily_mood') }}">
-            <span style="font-size: 1.5rem;">↩</span>
-        </a>
-    </div>
+    <form method="GET" action="{{ url_for('daily_mood') }}" id="back-link">
+        <button type="submit" class="btn-jelly-back">↩ 다시 기록하기</button>
+    </form>
 
-    <article style="display: flex; gap: 150px; justify-content: center;">
-        <div>{{ count_happy }}</div>
-        <div>{{ count_angry }}</div>
-        <div>{{ count_sad }}</div>
-        <div>{{ count_pleasure }}</div>
-    </article>
+    <div class="diary-emotion">
 
-    <article style="display: flex; gap: 150px; justify-content: center;">
-        <div>
-            <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;">
+        <article style="display: flex; gap: 150px; justify-content: center;">
+            div>
+                <img src="{{ url_for('static', filename='image/happy.png') }}" style="width: 50px;">
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;">
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;">
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;">
+            </div>
+        </article>
+
+        <article style="display: flex; gap: 100px; justify-content: center;">
+            <div>{{ count_happy }}</div>
+            <div>{{ count_angry }}</div>
+            <div>{{ count_sad }}</div>
+            <div>{{ count_pleasure }}</div>
+        </article>
+        <div class="mood-happy">
+            <img src="{{ url_for('static', filename='image/happy.png') }}" class="music-emoji">
         </div>
-        <div>
-            <img src="{{ url_for('static', filename='image/angry.png') }}" style="width: 50px;">
-        </div>
-        <div>
-            <img src="{{ url_for('static', filename='image/sad.png') }}" style="width: 50px;">
-        </div>
-        <div>
-            <img src="{{ url_for('static', filename='image/pleasure.png') }}" style="width: 50px;">
-        </div>
-    </article>
+        <h2 class="mood-title">오늘 기분이 <span class="highlight-orange">정말 좋아 보이시네요!</span></h2>
+        <p class="mood-subtitle">당신의 밝은 에너지에 어울리는 기분 좋은 리듬을 골라봤어요.</p>
+
 
     <article style="display: flex; gap: 150px; justify-content: center;">
         <div>{{ recommend_happy }}</div>
